@@ -1,19 +1,34 @@
+# Device Information
 deviceinfo_name="Realme X2 Pro"
 deviceinfo_manufacturer="Realme"
-deviceinfo_codename="RMX1931"
+deviceinfo_codename="RMX1931" # Update this if your codename is different
 deviceinfo_arch="aarch64"
-deviceinfo_kernel_source="kernel/realme/sm8150"
-deviceinfo_kernel_source_branch="lineage-17.1"
+
+# Kernel Source & Compilation
+deviceinfo_kernel_source="https://github.com/FusinX/android_kernel_realme_sm8150"
+deviceinfo_kernel_source_branch="halium-10"
 deviceinfo_kernel_defconfig="RMX1931_defconfig halium.config"
-#deviceinfo_kernel_cmdline="console=tty0 loop.max_part=7 androidboot.usbcontroller=a600000.dwc3 androidboot.selinux=permissive"
-deviceinfo_kernel_cmdline="console=ttyMSM0,115200n8 earlycon=msm_geni_serial,0xa90000 androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=2048 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7 androidboot.usbcontroller=a600000.dwc3 androidboot.selinux=permissive buildvariant=userdebug console=tty0"
 deviceinfo_kernel_clang_compile="true"
+
+# Kernel Command Line (Added console=tty0 as required)
+deviceinfo_kernel_cmdline="console=tty0 console=ttyMSM0,115200n8 earlycon=msm_geni_serial,0xa90000 androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=2048 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7 androidboot.usbcontroller=a600000.dwc3 buildvariant=userdebug"
+
+# Boot Image Configuration
+deviceinfo_halium_version="11"
+deviceinfo_bootimg_header_version="1"
 deviceinfo_flash_pagesize="4096"
+
+# Flash Offsets (Extracted from bootinfo.md)
 deviceinfo_flash_offset_base="0x00000000"
 deviceinfo_flash_offset_kernel="0x00008000"
 deviceinfo_flash_offset_ramdisk="0x01000000"
 deviceinfo_flash_offset_second="0x00f00000"
 deviceinfo_flash_offset_tags="0x00000100"
-deviceinfo_flash_offset_dtb="0x00000100"
-deviceinfo_bootimg_header_version="0"
-deviceinfo_halium_version="10"
+
+# OS Version & Patch Level
+deviceinfo_bootimg_os_version="10.0.0"
+deviceinfo_bootimg_os_patch_level="2023-02"
+
+# Rootfs & Storage
+deviceinfo_use_overlaystore="true"
+deviceinfo_rootfs_image_sector_size="4096"
