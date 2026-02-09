@@ -1,11 +1,11 @@
 # Device Information
 deviceinfo_name="Realme X2 Pro"
 deviceinfo_manufacturer="Realme"
-deviceinfo_codename="RMX1931" # Update this if your codename is different
+deviceinfo_codename="RMX1931"
 deviceinfo_arch="aarch64"
 
 # Kernel Source & Compilation
-deviceinfo_kernel_source="https://github.com/FusinX/android_kernel_realme_sm8150"
+deviceinfo_kernel_source="https://github.com/FusinX/android_kernel_realme_sm8150.git"
 deviceinfo_kernel_source_branch="halium-10"
 deviceinfo_kernel_defconfig="RMX1931_defconfig halium.config"
 deviceinfo_kernel_clang_compile="true"
