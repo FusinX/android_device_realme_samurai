@@ -1,4 +1,2 @@
 # DPM
-persist.vendor.dpm.feature=1
-persist.vendor.dpm.loglevel=0
-persist.vendor.dpm.nsrm.bkg.evt=3955
+# DPM is omitted because its system_ext framework and executable are disabled.

@@ -6,8 +6,8 @@
 
 $(call inherit-product, device/realme/samurai/device.mk)
 
-# Inherit some common Lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+# The product uses only the AOSP base products inherited by device.mk so the
+# vendor image does not require Lineage framework components.
 
 # Device identifier. This must come after all inclusions.
 PRODUCT_BRAND := realme

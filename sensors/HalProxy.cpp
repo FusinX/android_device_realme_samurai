@@ -16,8 +16,6 @@
 
 #include "HalProxy.h"
 
-#include "AlsCorrection.h"
-
 #include <android/hardware/sensors/2.0/types.h>
 
 #include <android-base/file.h>
@@ -498,7 +496,6 @@ void HalProxy::initializeSensorList() {
                     if (static_cast<int>(sensor.type) == SENSOR_TYPE_WISE_LIGHT) {
                         sensor.type = SensorType::LIGHT;
                         ALOGV("Replaced Wise Light sensor with standard light sensor");
-                        AlsCorrection::init();
                     }
                     // Standardize oplus pickup sensor
                     if (sensor.typeAsString == "android.sensor.tilt_detector") {
@@ -677,11 +674,6 @@ void HalProxy::postEventsToMessageQueue(const std::vector<Event>& eventsList, si
         incrementRefCountAndMaybeAcquireWakelock(numWakeupEvents);
     }
     std::vector<Event> events(eventsList);
-    for (auto& event : events) {
-        if (static_cast<int>(event.sensorType) == SENSOR_TYPE_WISE_LIGHT) {
-            AlsCorrection::process(event);
-        }
-    }
     if (mPendingWriteEventsQueue.empty()) {
         numToWrite = std::min(events.size(), mEventQueue->availableToWrite());
         if (numToWrite > 0) {

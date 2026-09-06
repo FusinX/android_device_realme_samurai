@@ -4,7 +4,7 @@ aidl_interface {
         "vendor/oplus/hardware/syshelper/*.aidl",
     ],
     vendor_available: true,
-    system_ext_specific: true,
+    // This interface is consumed by vendor HALs and must not be installed in system_ext.
     local_include_dir: ".",
     stability: "vintf",
     backend: {

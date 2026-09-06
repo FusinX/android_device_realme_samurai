@@ -6,6 +6,11 @@
 
 BOARD_VENDOR := realme
 
+# Keep the legacy Android 11 vendor partition compatible with an Android 13 GSI.
+PRODUCT_FULL_TREBLE_OVERRIDE := true
+BOARD_VNDK_VERSION := current
+PRODUCT_EXTRA_VNDK_VERSIONS := 30
+
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true
@@ -43,6 +48,7 @@ BOARD_KERNEL_CMDLINE := \
     androidboot.boot_devices=soc/1d84000.ufshc \
     androidboot.console=ttyMSM0 \
     androidboot.hardware=qcom \
+    androidboot.selinux=permissive \
     androidboot.usbcontroller=a600000.dwc3 \
     kpti=off \
     loop.max_part=7 \
@@ -95,14 +101,13 @@ NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 
 # FOD
-TARGET_SURFACEFLINGER_UDFPS_LIB := //$(DEVICE_PATH):libudfps_extension.samurai
-TARGET_USES_FOD_ZPOS := true
+# FOD illumination is owned by the vendor fingerprint service; avoid a system-side
+# SurfaceFlinger extension that is unavailable to a generic AOSP system image.
 
 # Hidl
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
     $(DEVICE_PATH)/device_framework_matrix.xml \
-    hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml \
-    vendor/lineage/config/device_framework_matrix.xml
+    hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 
@@ -151,9 +156,7 @@ ENABLE_VENDOR_RIL_SERVICE := true
 VENDOR_SECURITY_PATCH := 2021-11-05
 
 # Sepolicy
-include device/qcom/sepolicy_vndr-legacy-um/SEPolicy.mk
-SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
-SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
+# Keep device-specific policy in the vendor policy boundary for GSI isolation.
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 
 # Power
